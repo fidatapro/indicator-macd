@@ -1,0 +1,1 @@
+export const _URL = "https://app.fidata.pro/api/quantifycrypto-coin"
