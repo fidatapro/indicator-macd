@@ -238,23 +238,60 @@ export default {
       },
       { text: "NAME", width: "250px", value: "coin_name", align: "start" },
       { text: "PRICE", value: "coin_price", align: "center", width: "auto" },
-      { text: "MACD5M", value: "macd_hist_5min", align: "end", width: "auto" },
-      { text: "MACD15M", value: "macd_hist_15min", align: "end" },
-      { text: "MACD30M", value: "macd_hist_30min", align: "end" },
-      { text: "MACD1H", value: "macd_hist_1h", align: "end" },
-      { text: "MACD2H", value: "macd_hist_2h", align: "end" },
-      { text: "MACD4H", value: "macd_hist_4h", align: "end" },
-      { text: "MACD24H", value: "macd_hist_24h", align: "end" },
+      {
+        text: "MACD5M",
+        value: "macd_hist_5min",
+        align: "end",
+        width: "auto",
+        isFilter: true,
+      },
+      {
+        text: "MACD15M",
+        value: "macd_hist_15min",
+        align: "end",
+        isFilter: true,
+      },
+      {
+        text: "MACD30M",
+        value: "macd_hist_30min",
+        align: "end",
+        isFilter: true,
+      },
+      { text: "MACD1H", value: "macd_hist_1h", align: "end", isFilter: true },
+      { text: "MACD2H", value: "macd_hist_2h", align: "end", isFilter: true },
+      { text: "MACD4H", value: "macd_hist_4h", align: "end", isFilter: true },
+      { text: "MACD24H", value: "macd_hist_24h", align: "end", isFilter: true },
 
       {
         text: "BB5M",
         value: "bollinger_bands_5min",
         align: "end",
+        isFilter: true,
       },
-      { text: "BB15M", value: "bollinger_bands_15min", align: "end" },
-      { text: "BB30M", value: "bollinger_bands_30min", align: "end" },
-      { text: "BB1H", value: "bollinger_bands_1h", align: "end" },
-      { text: "BB2H", value: "bollinger_bands_2h", align: "end" },
+      {
+        text: "BB15M",
+        value: "bollinger_bands_15min",
+        align: "end",
+        isFilter: true,
+      },
+      {
+        text: "BB30M",
+        value: "bollinger_bands_30min",
+        align: "end",
+        isFilter: true,
+      },
+      {
+        text: "BB1H",
+        value: "bollinger_bands_1h",
+        align: "end",
+        isFilter: true,
+      },
+      {
+        text: "BB2H",
+        value: "bollinger_bands_2h",
+        align: "end",
+        isFilter: true,
+      },
     ],
     pagination: {
       page: 1,
@@ -331,7 +368,7 @@ export default {
       this.$refs.dialogColumn.setLisColumnShow();
       this.getColumnShow();
       this.loading = false;
-      setTimeout(() => this.initialize(), 5 * 60 * 1000);
+      setInterval(() => this.initialize(), 5 * 60 * 1000);
     },
     getColumnShow() {
       const ema_colum = localStorage.getItem("MACD_COLUMN");
@@ -340,7 +377,7 @@ export default {
       } else {
         const val_heads = JSON.parse(ema_colum).map((x) => x.value);
         this.headers_ = this.headers
-          .filter((x) => !x.text)
+          .filter((x) => !x.isFilter)
           .concat(this.headers.filter((x) => val_heads.includes(x.value)));
       }
     },
@@ -388,7 +425,7 @@ export default {
   },
   computed: {
     listFields() {
-      const list_header = this.headers.filter((x) => x.text);
+      const list_header = this.headers.filter((x) => x.isFilter);
       return list_header.map((x) => ({
         text: x.text,
         value: x.value,
